@@ -13,6 +13,10 @@ namespace rory
         public float raycastStep;
         public int noOfRays = 2;
 
+        public float maxAngle = 100;
+        public int rays = 10;
+        public float spacingScale = 1f;
+
         public float GetDist()
         {
             if (Physics.Raycast(transform.localPosition, transform.forward, out hit, range, mask))
@@ -22,17 +26,50 @@ namespace rory
             }
             return 1;
         }
+        
+        public float GetObstructedSight()
+        {
+            var TurnDir = 0f;
+            for (int i = -rays/2; i <= rays/2; i++)
+            {
+                // Very simple. Doesn't take any tilting or pitching into account, but is fine for horizontal only AIs
+                float spreadAngle = -maxAngle/(rays-1);
+                Vector3 dir = Quaternion.Euler(0, i*spreadAngle, 0) * transform.forward;
+                
+                Debug.DrawRay(transform.position, dir * range, Color.yellow);
+                if (Physics.Raycast(transform.localPosition, dir, out hit, range, mask))
+                {
+                    TurnDir -= i*spreadAngle;
+                }
+                else
+                {
+                    TurnDir += i*spreadAngle;
+                }
+            }
+
+            return TurnDir;
+        }
 
         
         private RaycastHit hitL;
         private RaycastHit hitR;
         public bool Obstructed()
         {
-            if(Physics.Raycast(transform.localPosition, transform.forward, out hit, range, mask))
+            for (int i = -rays/2; i <= rays/2; i++)
             {
-                return true;
+                float spreadAngle = -maxAngle/(rays-1);
+                Vector3 dir = Quaternion.Euler(0, i*spreadAngle, 0) * transform.forward;
+                if (Physics.Raycast(transform.localPosition, dir, out hit, range, mask))
+                {
+                    return true;
+                }
             }
             return false;
+        }
+
+        public float ReturnSightRange()
+        {
+            return range;
         }
     }
 }

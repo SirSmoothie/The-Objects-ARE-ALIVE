@@ -16,6 +16,7 @@ namespace rory
 
         public float SteerAngle = 1;
         public float speed = 1;
+        public float turnStrength = 5;
         private void Start()
         {
             vision = GetComponent<RoridsVision>();
@@ -24,10 +25,13 @@ namespace rory
 
         private void Update()
         {
+            
             if (vision.Obstructed())
             {
-                var tempSpeed = speed / (vision.GetDist() /5);
-                rb.AddRelativeTorque(new Vector3(0,SteerAngle * tempSpeed,0), ForceMode.Force);
+                var turnAngle = vision.GetObstructedSight()/turnStrength;
+                var tempSpeed = (vision.GetDist()/speed);
+                print(vision.GetDist());
+                rb.AddRelativeTorque(new Vector3(0,turnAngle * tempSpeed,0), ForceMode.Force);
             }
         }
     }
