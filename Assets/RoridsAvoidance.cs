@@ -30,7 +30,6 @@ namespace rory
             {
                 var turnAngle = vision.GetObstructedSight()/turnStrength;
                 var tempSpeed = (vision.GetDist()/speed);
-                print(vision.GetDist());
                 rb.AddRelativeTorque(new Vector3(0,turnAngle * tempSpeed,0), ForceMode.Force);
             }
         }

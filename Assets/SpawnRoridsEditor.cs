@@ -12,9 +12,14 @@ namespace rory
         {
             base.OnInspectorGUI();
 
-            if (GUILayout.Button("Spawn Boids"))
+            if (GUILayout.Button("Spawn One Type of Boids"))
             {
-                (target as SpawnRorids)?.Spawn();
+                (target as SpawnRorids)?.SpawnSelected();
+            }
+            
+            if (GUILayout.Button("Spawn One of Each"))
+            {
+                (target as SpawnRorids)?.SpawnOneOfEach();
             }
         }
     }

@@ -26,9 +26,9 @@ namespace rory
                 Vector3 targetDir;
                 targetDir = targetTransform.position - transform.position;
 
-                float angle = Vector3.SignedAngle(transform.forward, targetDir*turnSpeed, Vector3.up);
+                float angle = Vector3.SignedAngle(transform.forward, targetDir, Vector3.up);
                 
-                rb.AddRelativeTorque(0, angle, 0, ForceMode.Force);
+                rb.AddRelativeTorque(0, angle*turnSpeed, 0, ForceMode.Force);
             }
         }
         

@@ -17,6 +17,10 @@ namespace rory
         public int rays = 10;
         public float spacingScale = 1f;
 
+        public float TurnDir;
+
+        public AnimationCurve distanceMultiplier;
+        
         public float GetDist()
         {
             if (Physics.Raycast(transform.localPosition, transform.forward, out hit, range, mask))
@@ -29,21 +33,22 @@ namespace rory
         
         public float GetObstructedSight()
         {
-            var TurnDir = 0f;
+            TurnDir = 0;
             for (int i = -rays/2; i <= rays/2; i++)
             {
                 // Very simple. Doesn't take any tilting or pitching into account, but is fine for horizontal only AIs
                 float spreadAngle = -maxAngle/(rays-1);
                 Vector3 dir = Quaternion.Euler(0, i*spreadAngle, 0) * transform.forward;
-                
-                Debug.DrawRay(transform.position, dir * range, Color.yellow);
+                //Debug.DrawRay(transform.position, dir * range, Color.yellow);
                 if (Physics.Raycast(transform.localPosition, dir, out hit, range, mask))
                 {
-                    TurnDir -= i*spreadAngle;
+                    var dist = hit.distance/range;
+                    TurnDir -= (i*spreadAngle)*distanceMultiplier.Evaluate(dist);
                 }
                 else
                 {
-                    TurnDir += i*spreadAngle;
+                    var dist = hit.distance/range;
+                    TurnDir += (i*spreadAngle)*distanceMultiplier.Evaluate(dist);
                 }
             }
 

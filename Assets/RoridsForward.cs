@@ -29,5 +29,13 @@ namespace rory
             var tempSpeed = speed - (vision.GetDist() * speedMultiplier);
             rb.AddForce(transform.forward * tempSpeed, ForceMode.Force);
         }
+        
+        public void MoveBackwards()
+        {
+            var sightRange = vision.ReturnSightRange();
+            var speedMultiplier = speed / (sightRange - 2);
+            var tempSpeed = speed - (vision.GetDist() * speedMultiplier);
+            rb.AddForce(transform.forward * tempSpeed, ForceMode.Force);
+        }
     }
 }
