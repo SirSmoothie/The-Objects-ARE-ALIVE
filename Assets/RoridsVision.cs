@@ -7,17 +7,12 @@ namespace rory
 {
     public class RoridsVision : MonoBehaviour
     {
-        public float range;
+        public float range = 60f;
         public LayerMask mask;
         private RaycastHit hit;
-        public float raycastStep;
-        public int noOfRays = 2;
 
         public float maxAngle = 100;
         public int rays = 10;
-        public float spacingScale = 1f;
-
-        public float TurnDir;
 
         public AnimationCurve distanceMultiplier;
         
@@ -33,7 +28,7 @@ namespace rory
         
         public float GetObstructedSight()
         {
-            TurnDir = 0;
+            var TurnDir = 0f;
             for (int i = -rays/2; i <= rays/2; i++)
             {
                 // Very simple. Doesn't take any tilting or pitching into account, but is fine for horizontal only AIs

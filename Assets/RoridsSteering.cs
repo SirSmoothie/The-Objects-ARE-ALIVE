@@ -9,7 +9,7 @@ namespace rory
         private Rigidbody rb;
         private float perlinOffset;
         [SerializeField] private float perlinNoise;
-        public float speed;
+        public float speed = 2f;
 
         private void Start()
         {

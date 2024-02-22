@@ -8,7 +8,7 @@ namespace rory
     {
         private Rigidbody rb;
         private RoridsVision vision;
-        public float speed;
+        public float speed = 50f;
 
         private void Start()
         {

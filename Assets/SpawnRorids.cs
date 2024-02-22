@@ -32,7 +32,7 @@ namespace rory
                 {
                     for (int z = 0; z < SpawnSize; z++)
                     {
-                        var o = Instantiate(Boid[i], new Vector3(x, 0, z), Quaternion.identity);
+                        var o = Instantiate(Boid[i], new Vector3(transform.position.x + x, 0, transform.position.z + z), Quaternion.identity);
                         o.GetComponent<RoridsTurnTowards>().targetTransform = targetObject.transform; 
                     }
                 }

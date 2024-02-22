@@ -7,8 +7,14 @@ namespace rory
 {
     public class RoridsAlignment : MonoBehaviour
     {
-        public RoridsNeighbourDetection neighbours;
-        public float force;
+        private RoridsNeighbourDetection neighbours;
+        public float force = 0.2f;
+
+        private void Start()
+        {
+            neighbours = GetComponent<RoridsNeighbourDetection>();
+        }
+
         private void FixedUpdate()
         {
             var newNeighbours = (neighbours.FindNewNeighbours());
